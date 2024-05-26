@@ -9,7 +9,7 @@
     height: 100vh;
     display: flex;
   }
-  
+ 
   .slanted-background {
     position: absolute;
     top: 0;
@@ -73,15 +73,28 @@
     
      .page-logo{
         width: 100%;
-        height: 10%;
+        height: 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #605BFF;
+     }
+     .page-logo img{
+     width: 80px; 
+     height: 80px;
+     margin-left: 6px;
+     
+
      }
     .slanted-background {
         display: none;
     }
     .main-heading {
-      display: none; /* Hide the heading */
-  }
+      font-size: 10px;
+     justify-content: center;
+      align-items: center;
+      margin-left: 13px;
+    }
 
     .right-content {
         width: 100%; /* Adjust the width as needed */

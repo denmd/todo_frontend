@@ -17,7 +17,7 @@ const Home = () => {
 
   const fetchProjects = async () => {
     try {
-        const response = await fetch('http://localhost:7000/project/get-projects', {
+        const response = await fetch('https://todo-backend-crcs.onrender.com/project/get-projects', {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -34,7 +34,7 @@ const Home = () => {
   };
   const fetchUsername = async () => {
     try {
-        const response = await fetch('http://localhost:7000/auth/user', {
+        const response = await fetch('https://todo-backend-crcs.onrender.com/auth/user', {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -48,7 +48,7 @@ const Home = () => {
   const createNewProject = async (title) => {
    
     try {
-      const response = await fetch('http://localhost:7000/project/create-project', {
+      const response = await fetch('https://todo-backend-crcs.onrender.com/project/create-project', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,12 +73,16 @@ const Home = () => {
     navigate('/todo',{ state: projectId })
 };
 
+const handleLogout = () => {
+  localStorage.removeItem('token');
+ navigate('/')
+};
 
   return (
     <div className="homepage">
       <div className='home-header'>
       <div className='user-name-title'> <img src={HelloLogo} alt="Edit Icon" />{user}</div>
-      <button className='logout'>logout</button>
+      <button className='logout' onClick={()=>{handleLogout()}}>logout</button>
       </div>
         <div className='inner-rectangle'>
       <button onClick={() => setIsModalOpen(true)} className="create-project-button"><p>New Project</p></button>

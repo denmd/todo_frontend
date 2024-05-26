@@ -6,12 +6,12 @@ const RegisterForm = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  const [errorMessage, setErrorMessage] = useState('');
   const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:7000/auth/register', { username, password });
+      const response = await axios.post('https://todo-backend-crcs.onrender.com/auth/register', { username, password });
 
       if (response.status === 201) {
         setSuccessMessage('User created successfully!');
@@ -19,6 +19,8 @@ const RegisterForm = () => {
         console.error('Registration failed:', response.data.message);
       }
     } catch (error) {
+      setSuccessMessage(''); 
+      setErrorMessage(error.response?.data?.message || 'Registration error');
       console.error('Registration error:', error);
     }
   };
@@ -40,6 +42,7 @@ const RegisterForm = () => {
           <button type="submit" className="register-submit-button">Register</button>
         </form>
         {successMessage && <div className="success-message" style={{marginTop:'20px'}}>{successMessage}</div>}
+        {errorMessage && <div className="error-message" style={{marginTop:'20px'}}>{errorMessage}</div>}
       </div>
       
     </div>
