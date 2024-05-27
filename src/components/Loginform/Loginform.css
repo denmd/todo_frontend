@@ -1,7 +1,6 @@
 .login-form-container {
     display: flex;
     flex-direction: column;
-   
     align-items: flex-start;
     margin-left: 20%;
     margin-top: 20%;
@@ -50,7 +49,7 @@
   
   
   .submit-button {
-    width: 340px;
+    width: 320px;
     padding: 10px;
     font-size: 16px;
     color: #fff;
@@ -72,27 +71,24 @@
     color: #0056b3 ;
     text-decoration: none;
   }
-  
+  .error-message{
+    display: flex;
+    color: red;
+align-self: center;
+
+margin-right: 7%;
+  }
   @media (max-width: 768px) {
     .login-form-container{
         margin-top:35%;
         margin-left: 0;
        align-items: center;
     }
-    .social-sign-in {
-       
-            width: 100%; 
-            text-align: center; 
-            white-space: nowrap; 
-       
-    }
-    
-    .social-button {
-        margin-bottom: 10px; 
-    }
+   
     .credentials {
         margin-left:0;
         text-align: center;
+        
     }
     .d_account,
   .register{
@@ -101,6 +97,11 @@
     margin-top: 25px;
     
   } 
+  .error-message{
+   
+
+margin-right: 4%;
+  }
     
       
 }

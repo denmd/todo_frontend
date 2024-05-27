@@ -6,6 +6,7 @@ const Loginform = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +55,7 @@ console.log('helo')
       
       </form>
       </div>
+      {error && <div className="error-message" style={{marginTop:'20px'}}>{error}</div>}
     </div>
   );
 };
