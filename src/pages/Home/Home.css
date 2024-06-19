@@ -1,15 +1,19 @@
 .homepage {
     background-color: #655ffa;
-    min-height: 105vh; 
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
     justify-content: center; 
     align-items: center; 
      margin-top: 0;
   }
+  .home-header{
+    margin-top: 30px;
+  }
   
   .inner-rectangle {
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 80px;
     width: 80%; 
     min-height: 80%; 
     background-color:aliceblue;
@@ -17,6 +21,7 @@
     box-sizing: border-box; 
     border-radius: 20px;
     box-shadow: 0 2px 8px rgba(0.4, 0.4, 0, 0.6);
+    overflow-y: auto;
   }
   
   .create-project-button {
@@ -24,7 +29,7 @@
     background-color: #136ecf;
     border: none;
     border-radius: 20px;
-    width: calc(10% - 5px);;
+  
     height: 30px;
     display: flex;
     align-self: center;
@@ -33,12 +38,32 @@
     margin-bottom: 20px;
     color: white;
   }
+  
+  .inner-rectangle-head{
+    display: flex;
+    justify-content: space-between;
+  }
   .create-project-button p{
-    margin-left: 6px;
+    margin: 6px;
       }
+  .viewdropdown{
+    height: 30px;
+    border: none;
+    color: white;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #136ecf;
+  }
+  .viewdropdown option{
+    color: black;
+    background-color:white;
+  }
+   
+      
   
   .project-list {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px; 
     
@@ -48,7 +73,7 @@
     background-color:white;
     border-radius: 20px;
     padding: 10px;
-    width: calc(33.33% - 80px);
+    width: calc(23.90%);
     height: 17rem;
     box-shadow: 0 2px 8px rgba(0.4, 0.4, 0, 0.4);
     border-radius: 10\5px;
@@ -171,12 +196,17 @@
   .logout {
    margin-right: 5%;
   }
-  
+  @media (max-width: 912px) {
+
+    .project-block {
+      width: calc(27.20%);
+    }
+    }
   
  
   @media (max-width: 767px) {
     .project-block {
-      width: calc(50% - 20px);
+      width: calc(50% );
     }
     .create-project-button{
       width: calc(35% - 8px);
@@ -187,6 +217,9 @@
   }
   
   @media (max-width: 480px) {
+    .inner-rectangle{
+      width: 90%;
+    }
     .project-block {
       width: calc(100% - 20px);
     }

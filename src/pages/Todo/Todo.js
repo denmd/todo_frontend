@@ -26,7 +26,7 @@ const Todo = () => {
   }, []);
   const fetchProjectTitle = async () => {
     try {
-      const response = await fetch(`https://todo-backend-crcs.onrender.com/project/get-project-title?projectId=${projectid}`, {
+      const response = await fetch(`http://localhost:7000/project/get-project-title?projectId=${projectid}`, {
         headers: {
           'Authorization': localStorage.getItem('token')
         }
@@ -44,7 +44,7 @@ const Todo = () => {
 
   const updateProjectTitle = async () => {
     try {
-      const response = await fetch(`https://todo-backend-crcs.onrender.com/project/update-project?projectId=${projectid}`, {
+      const response = await fetch(`http://localhost:7000/project/update-project?projectId=${projectid}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -53,9 +53,9 @@ const Todo = () => {
         body: JSON.stringify({ title: updatedProjectTitle })
       });
       if (response.ok) {
-        // Refresh project title
+      
         fetchProjectTitle();
-        setEditProjectTitle(false); // Hide edit input after updating
+        setEditProjectTitle(false); 
       } else {
         console.error('Failed to update project title');
       }
@@ -65,7 +65,7 @@ const Todo = () => {
   };
   const fetchTodos = async () => {
     try {
-      const response = await fetch(`https://todo-backend-crcs.onrender.com/todo/get-all-todos?projectId=${projectid}`, {
+      const response = await fetch(`http://localhost:7000/todo/get-all-todos?projectId=${projectid}`, {
         headers: {
           'Authorization': localStorage.getItem('token')
         }
@@ -89,7 +89,7 @@ const Todo = () => {
 
   const createNewTodo = async (description) => {
     try {
-      const response = await fetch(`https://todo-backend-crcs.onrender.com/todo/new-todo?projectId=${projectid}`, {
+      const response = await fetch(`http://localhost:7000/todo/new-todo?projectId=${projectid}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -117,13 +117,14 @@ const handleset=(id,des)=>{
     [id]: des
   });
 }
+
   const editTodo = async (id,updates) => {
     console.log(updates)
-    console.log('hdbc')
+  
     
     try {
     
-      const response = await fetch(`https://todo-backend-crcs.onrender.com/todo/update-todo?todoId=${id}`, {
+      const response = await fetch(`http://localhost:7000/todo/update-todo?todoId=${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +147,7 @@ const handleset=(id,des)=>{
 
   const deleteTodo = async (id) => {
     try {
-        const response = await fetch(`https://todo-backend-crcs.onrender.com/todo/remove-todo?todoId=${id}`, {
+        const response = await fetch(`http://localhost:7000/todo/remove-todo?todoId=${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -164,7 +165,7 @@ const handleset=(id,des)=>{
 };
 const exportSummary = async () => {
   try {
-    const response = await fetch(`https://todo-backend-crcs.onrender.com/gist/export-summary?projectId=${projectid}`, {
+    const response = await fetch(`http://localhost:7000/gist/export-summary?projectId=${projectid}`, {
       method: 'POST',
       headers: {
         'Authorization': localStorage.getItem('token')
@@ -173,7 +174,7 @@ const exportSummary = async () => {
     if (response.ok) {
       const data = await response.json();
     
-      // Trigger file download
+     
       const blob = new Blob([data.fileContent], { type: 'text/markdown' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -219,9 +220,14 @@ const handleKeyDown = (e) => {
         )}
       </div>
       <div className="header">
-        <button className="create-todo-button" onClick={() => setIsOpen(true)}><img src={PlusLogo} alt="Edit Icon" /><h4>Create New Todo</h4></button>
+        <div className='left-btns' style={{display:'flex',flexDirection:'row'
+        }}>
+        <button className="create-todo-button" onClick={() => setIsOpen(true)}><img src={PlusLogo} alt="Edit Icon" /><h4>New Todo</h4></button>
+        <button className="collaborator-button" ><img src={PlusLogo} alt="Edit Icon" /><h4>collaborators</h4></button>
+        </div>
          <button className="export-summary-button" onClick={()=>exportSummary()}> <img src={ExportLogo} alt="Edit Icon" /><h4>Export Summary</h4></button>
       </div>
+
      
       <div className="todos">
       {listtodos && listtodos.length > 0 ? (

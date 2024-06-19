@@ -9,6 +9,7 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProjectTitle, setNewProjectTitle] = useState('');
   const [user, setUser] = useState('');
+  const [view, setView]= useState('owned')
 
   useEffect(() => {
     fetchProjects();
@@ -17,12 +18,15 @@ const Home = () => {
 
   const fetchProjects = async () => {
     try {
-        const response = await fetch('https://todo-backend-crcs.onrender.com/project/get-projects', {
+        const response = await fetch(`http://localhost:7000/project/get-projects?view=${view}`, {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
           });
+        
       const data = await response.json();
+      
+      console.log(data)
       if (!data){
         setProjects([])
       }
@@ -32,9 +36,14 @@ const Home = () => {
       console.error('Error fetching projects:', error);
     }
   };
+  const handleViewchange =(e)=>{
+     setView(e.target.value)
+  }
+
+
   const fetchUsername = async () => {
     try {
-        const response = await fetch('https://todo-backend-crcs.onrender.com/auth/user', {
+        const response = await fetch('http://localhost:7000/auth/user', {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
@@ -48,7 +57,7 @@ const Home = () => {
   const createNewProject = async (title) => {
    
     try {
-      const response = await fetch('https://todo-backend-crcs.onrender.com/project/create-project', {
+      const response = await fetch('http://localhost:7000/project/create-project', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,11 +94,16 @@ const handleLogout = () => {
       <button className='logout' onClick={()=>{handleLogout()}}>logout</button>
       </div>
         <div className='inner-rectangle'>
+          <div  className='inner-rectangle-head'>
       <button onClick={() => setIsModalOpen(true)} className="create-project-button"><p>New Project</p></button>
-      
+      <select className='viewdropdown' value={view} onChange={handleViewchange} >
+        <option value="owned">owned projects</option>
+        <option value="collobrated"> collobrated projects</option>
+      </select>
+      </div>
       <div className="project-list">
-       
-      {Array.isArray(projects) ? (
+     {view === 'owned' ? (
+      Array.isArray(projects) ? (
             projects.map((project) => (
               <div key={project._id} className="project-block">
                 <div className="project-name">
@@ -97,16 +111,18 @@ const handleLogout = () => {
                 </div>
                 <div className='data-div'>
                   <p>Created: {new Date(project.createdDate).toLocaleDateString()}</p>
+               
                   <button onClick={() => viewProject(project._id)}>View Project</button>
                 </div>
               </div>
             ))
           ) : (
             <p className=''>No projects found.</p>
-          )}
-
+          )):
+          (<h2>no collaboraded proejcts</h2>)
+        }
       </div>
-     
+        
     </div>
     {isModalOpen && (
         <div className="modal-overlay">

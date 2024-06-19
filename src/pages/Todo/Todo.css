@@ -31,7 +31,7 @@
 }
 
 .create-todo-button,
-.export-summary-button {
+.export-summary-button,.collaborator-button {
     border: 2px solid  #054e9d;
     border-radius: 20px;
     padding: 8px 16px;
@@ -41,10 +41,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+   
+
+}
+.left-btns{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap:15px
 }
 
 .create-todo-button {
-    margin-left: 4%;
+    margin-left: 3%;
     
 }
 
@@ -52,7 +60,7 @@
     margin-right: 4%;
     
 }
-.export-summary-button img,.create-todo-button img{
+.export-summary-button img,.create-todo-button img ,.collaborator-button img {
   align-content: center;
   margin-right: 6px;
   width: 20px;
@@ -213,5 +221,12 @@
     .dates{
         margin-right: 0px;
     }
+    .create-todo-button,
+.export-summary-button,.collaborator-button{
+    width:calc(37.90%);
+    margin: 0;
+    font-size: 12px;
+}
+
     
 }

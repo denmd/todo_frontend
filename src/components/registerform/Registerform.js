@@ -11,7 +11,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://todo-backend-crcs.onrender.com/auth/register', { username, password });
+      const response = await axios.post('http://localhost:7000/auth/register', { username, password });
 
       if (response.status === 201) {
         setSuccessMessage('User created successfully!');
