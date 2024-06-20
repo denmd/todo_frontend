@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Writelogo  from "../../assets/write.png"
 import ExportLogo from "../../assets/export.png"
+import Crosslogo from "../../assets/cross.png"
 import './Todo.css'; 
 import PlusLogo from "../../assets/plus.png"
 
@@ -15,6 +16,9 @@ const Todo = () => {
   const [projectTitle, setProjectTitle] = useState('vbvv')
   const [updatedProjectTitle, setUpdatedProjectTitle] = useState('');
   const [editProjectTitle, setEditProjectTitle] = useState(false);
+  const [isCollaboratorModelopen, setIsCollaboratordModelopen]=useState(false)
+  const [searchQuery, setSearchQuery]=useState('')
+  const [searchResults , setSearchResults]=useState([])
    
  
 
@@ -190,13 +194,39 @@ const exportSummary = async () => {
     console.error('Error exporting summary:', error);
   }
 };
+const fetchsearchResults= async(query) =>{
+     try{
+      if (!query.trim()) {
+        setSearchResults([]);
+        return; 
+      }
+      const response= await fetch(`http://localhost:7000/todo/search-users?username=${query}`,{
+        headers:{
+          'Authorization' : localStorage.getItem('token')
+        }})
+        if (response.ok){
+          const data= await response.json();
+          console.log(data.users)
+          setSearchResults(data.users)
+        }
+        else {
+          console.error('Failed to search users');
+        }
+     }
+     catch(error){
+      console.error('error in searching users',error)
+     }
+}
 const handleKeyDown = (e) => {
   if (e.key === 'Enter') {
     updateProjectTitle();
   }
 };
 
-
+ const handelSearchChange =(e)=>{
+  setSearchQuery(e.target.value)
+  fetchsearchResults(e.target.value);
+ }
 
   return (
     <div className="todo-list-container">
@@ -223,7 +253,7 @@ const handleKeyDown = (e) => {
         <div className='left-btns' style={{display:'flex',flexDirection:'row'
         }}>
         <button className="create-todo-button" onClick={() => setIsOpen(true)}><img src={PlusLogo} alt="Edit Icon" /><h4>New Todo</h4></button>
-        <button className="collaborator-button" ><img src={PlusLogo} alt="Edit Icon" /><h4>collaborators</h4></button>
+        <button className="collaborator-button" onClick={()=>setIsCollaboratordModelopen(true)} ><img src={PlusLogo} alt="Edit Icon" /><h4>collaborators</h4></button>
         </div>
          <button className="export-summary-button" onClick={()=>exportSummary()}> <img src={ExportLogo} alt="Edit Icon" /><h4>Export Summary</h4></button>
       </div>
@@ -293,7 +323,38 @@ const handleKeyDown = (e) => {
           </div>
         </div>
       )}
+      { isCollaboratorModelopen && (
+        <div className='collaborator-model'>
+       
+          <div className='collaborator-model-content'>
+        <img src={Crosslogo} alt="Edit Icon" />
+            <h2>Manage collaborators</h2>
+            <input value={searchQuery}
+             onChange={handelSearchChange }
+             placeholder='search for colloborators'
+             type='text'
+             ></input>
+             <div className='search-results'>
+              { searchResults && searchResults.length > 0 ? (
+                 searchResults.map(user=>(
+                <div key={user._id} className='search-result'>
+                  <span>{user.username}</span>
+                  <button>Add</button>
+                </div>
+                 ))
+                 ):(
+                 <h2></h2>)
+              }
+            
+
+             </div>
+             
+          </div>
+        </div>
+
+      )}
     </div>
+
   );
 };
 
